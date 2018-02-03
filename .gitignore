@@ -1,10 +1,9 @@
-./yellow_tripdata_*.csv
-/kaggle/test.zip
-/kaggle/train.zip
-/kaggle/test.csv
-/kaggle/train.csv
-/find_tribeca_pickups/*.csv
-/goog_maps_meteor/
+data/
+kaggle/test.zip
+kaggle/train.zip
+kaggle/test.csv
+kaggle/train.csv
+goog_maps_meteor/
 
 # virtual env
 .env
