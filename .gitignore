@@ -14,3 +14,6 @@ goog_maps_meteor/
 
 # mac
 .DS_Store
+
+# python
+__pycache__
