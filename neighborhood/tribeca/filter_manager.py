@@ -3,20 +3,20 @@ import numpy as np
 from scipy.linalg import circulant
 import os
 
-tribeca = pd.read_csv('tribeca_boundries.csv').values.astype('float32').T
+# tribeca = pd.read_csv('tribeca_boundries.csv').values.astype('float32').T
 
-edges = tribeca.dot(circulant([-1, 1, 0, 0]))
-orths = np.array([[0, 1], [-1, 0]]).dot(edges)
-struct = (edges, orths)
+# edges = tribeca.dot(circulant([-1, 1, 0, 0]))
+# orths = np.array([[0, 1], [-1, 0]]).dot(edges)
+# struct = (edges, orths)
 
-data_dir = '../../data/'
-write_data = os.path.join(data_dir, 'tribeca_data_2016-06.csv')
-read_data = os.path.join(data_dir, 'yellow_tripdata_2016-06.csv')
+# data_dir = '../../data/'
+# write_data = os.path.join(data_dir, 'tribeca_data_2016-06.csv')
+# read_data = os.path.join(data_dir, 'yellow_tripdata_2016-06.csv')
 
-try:
-    os.remove(write_data)
-except OSError:
-    pass
+# try:
+#     os.remove(write_data)
+# except OSError:
+#     pass
 
 
 def _get_edges_orths(vertices):
@@ -51,17 +51,18 @@ class filter:
                        ].values.astype('float32')
 
         index = np.all(latlon.dot(ort) -
-                       np.sum(ort * tribeca, axis=0) > 0, axis=1)
+                       np.sum(ort * self.corners, axis=0) > 0, axis=1)
         chunk = chunk.loc[index]
 
         if self.verbose:
             print("Processed chunk:")
             print(chunk.head())
 
-            if os.path.exists(write_data):
-                chunk.to_csv(write_data, mode='a', header=False, index=False)
+            if os.path.exists(self.filename):
+                chunk.to_csv(self.filename, mode='a',
+                             header=False, index=False)
             else:
-                chunk.to_csv(write_data, mode='w', index=False)
+                chunk.to_csv(self.filename, mode='w', index=False)
 
     def run(self, chunk):
         self.get_write_inner(chunk)
