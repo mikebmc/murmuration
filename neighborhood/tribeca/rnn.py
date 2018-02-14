@@ -21,7 +21,7 @@ def create_dataset(dataset, look_back=1):
 def do_stuff(input_data, look_back=1):
     #    print('input_data[:10] ={}\n'.format(input_data[:10]))
     scaler = MinMaxScaler(feature_range=(0, 1))
-    input_data = scaler.fit_transform(_1000_trips)
+    input_data = scaler.fit_transform(input_data)
 
     # normalize data, and split into train and test
     train_size = int(len(input_data) * 0.67)
@@ -37,7 +37,7 @@ def do_stuff(input_data, look_back=1):
     model.add(LSTM(4, input_shape=(1, look_back)))
     model.add(Dense(1))
     model.compile(loss='mean_squared_error', optimizer='adam')
-    model.fit(X_train, y_train, epochs=30, batch_size=1, verbose=2)
+    model.fit(X_train, y_train, epochs=5, batch_size=1, verbose=2)
 
     # make predictions
     train_predict = model.predict(X_train)
@@ -67,20 +67,24 @@ def do_stuff(input_data, look_back=1):
     test_predict_plot[len(train_predict) + (look_back * 2) +
                       1:len(input_data) - 1, :] = test_predict
 
+    print('train_predict_plot =', train_predict_plot)
+    print('test_predict_plot =', test_predict_plot)
+
     # plot baseline and predictions
-    # plt.plot(scaler.inverse_transform(data))
-    # plt.plot(train_predict_plot)
-    # plt.plot(test_predict_plot)
-    # plt.show()
+    plt.plot(scaler.inverse_transform(data))
+    plt.plot(train_predict_plot)
+    plt.plot(test_predict_plot)
+    plt.show()
 
 
-data = pd.read_csv('_30_minute_intersection.csv', usecols=[1],
-                   sep=',').values.astype('float32').reshape(-1)
+# data = pd.read_csv('_30_minute_intersection.csv', usecols=[1],
+#                    sep=',').values.astype('float32').reshape(-1)
 
-# print('type(data) =', type(data))
-
-_1000_trips = data[:1000]
-
-scaler = MinMaxScaler(feature_range=(0, 1))
-
-do_stuff(_1000_trips, look_back=1)
+numzones = 265
+for neighborhood in range(264, numzones):
+    data_dir = '../neighborhood' + str(neighborhood)
+    read = os.path.join(data_dir, 'data.csv')
+    data = pd.read_csv(read, usecols=[1], sep=',').values.astype(
+        'float32').reshape(-1, 1)
+    do_stuff(data, look_back=1)
+    break
