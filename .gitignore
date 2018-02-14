@@ -4,6 +4,7 @@ kaggle/train.zip
 kaggle/test.csv
 kaggle/train.csv
 goog_maps_meteor/
+neighborhood/neighborhood*/*
 
 # virtual env
 .env
