@@ -18,3 +18,4 @@ neighborhood/neighborhood*/*
 
 # python
 __pycache__
+*.pyc
