@@ -1,12 +1,12 @@
 import io
 import os
 import pandas as pd
-from naturalsort import natsorted
+from utils import natsorted
 
+linum = 10
 prd = '2017-05'
 neighborhoods = natsorted([dir for dir in os.listdir(
     '../') if 'neighborhood' in dir])
-linum = 10
 
 agg = []
 for nbh in neighborhoods:
