@@ -1,4 +1,5 @@
 import re
+import os
 
 
 def natsorted(a_list):
@@ -9,3 +10,10 @@ def natsorted(a_list):
 
     def key(e): return [convert(c) for c in re.split('([0-9]+)', e)]
     return sorted(a_list, key=key)
+
+
+def cleanup(fname):
+    try:
+        os.remove(fname)
+    except OSError:
+        pass

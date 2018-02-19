@@ -1,13 +1,6 @@
 import pandas as pd
 import os
-
-
-def cleanup(fname):
-    try:
-        os.remove(fname)
-    except OSError:
-        pass
-
+from utils import cleanup
 
 neighborhood_dir = '../neighborhood'
 data_dir = '../../data/'
