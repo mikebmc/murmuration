@@ -24,5 +24,3 @@ timeframe = pd.concat(agg, axis=0, ignore_index=True)
 timeframe.index += 1
 timeframe.index.name = 'n_id'
 timeframe.rename(columns={'PULocationID': 'count'}, inplace=True)
-
-print('timeframe =\n{}'.format(timeframe))
