@@ -4,9 +4,10 @@ from utils import cleanup
 
 neighborhood_dir = '../neighborhood'
 data_dir = '../../data/'
-prd = '2017-05'
+prd = '2017-02'
 read = os.path.join(data_dir, 'yellow_tripdata_{}.csv'.format(prd))
 
+# delete all matching files
 for nh in range(1, 266):
     write = os.path.join(neighborhood_dir + str(nh), 'data-{}.csv'.format(prd))
     cleanup(write)
