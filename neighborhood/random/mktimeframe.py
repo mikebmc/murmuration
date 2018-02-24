@@ -2,6 +2,7 @@ import io
 import os
 import pandas as pd
 from utils import natsorted
+from pymongo import MongoClient
 
 linum = 10
 prd = '2017-05'
@@ -24,3 +25,10 @@ timeframe = pd.concat(agg, axis=0, ignore_index=True)
 timeframe.index += 1
 timeframe.index.name = 'n_id'
 timeframe.rename(columns={'PULocationID': 'count'}, inplace=True)
+
+client = MongoClient('mongodb://localhost:27017')
+db = client.layer_bank
+
+post_id = db.toplayer.update(
+    {}, timeframe.reset_index().to_dict(orient='list'),
+    upsert=True)
