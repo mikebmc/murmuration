@@ -5,6 +5,7 @@ kaggle/test.csv
 kaggle/train.csv
 goog_maps_meteor/
 neighborhood/neighborhood*/*
+!neighborhood/neighborhood*/.keep
 
 # virtual env
 .env
@@ -18,3 +19,4 @@ neighborhood/neighborhood*/*
 
 # python
 __pycache__
+*.pyc
