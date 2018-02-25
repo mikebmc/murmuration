@@ -2,7 +2,9 @@ import io
 import os
 import re
 import datetime
+import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
 from utils import natsorted
 from pymongo import MongoClient
 
@@ -38,6 +40,14 @@ timeframe = pd.concat(agg, axis=0, ignore_index=True)
 timeframe.index += 1
 timeframe.index.name = 'n_id'
 timeframe.rename(columns={'PULocationID': 'count'}, inplace=True)
+timeframe['color'] = np.nan
+
+# use kmeans to calculate centroids for color assignments
+idx = KMeans(n_clusters=5).fit(
+    timeframe['count'].values.reshape(-1, 1)).labels_
+for ii, color in enumerate(
+        ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c']):
+    timeframe.loc[idx == ii, 'color'] = color
 
 # open a connection to mongodb
 client = MongoClient('mongodb://localhost:27017')
@@ -48,5 +58,5 @@ post_id = db.toplayer.update(
     {}, timeframe.reset_index().to_dict(orient='list'),
     upsert=True)
 
-# tell me the datetime used to collect the data
+# tell me the datetime of the data pushed
 print('dt =\n{}'.format(dt))
