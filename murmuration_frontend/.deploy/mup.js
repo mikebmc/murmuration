@@ -26,7 +26,7 @@ module.exports = {
     env: {
       // TODO: Change to your app's url
       // If you are using ssl, it needs to start with https://
-      ROOT_URL: 'http://www.murmuration-taxi.com',
+      ROOT_URL: 'http://www.fare-taxi.com',
       MONGO_URL: 'mongodb://localhost/meteor',
     },
 
@@ -50,7 +50,7 @@ module.exports = {
   },
 
   mongo: {
-    version: '3.4.1',
+    version: '3.6.2',
     servers: {
       one: {}
     }
