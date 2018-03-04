@@ -1,10 +1,15 @@
 import { allHoods } from './allHoods';
+import { Toplayer } from '../import/api/collections.js';
+
+//Meteor.subscribe('toplayer');
+
 Meteor.startup(function() {
   $(window).resize(function() {
     $('#map').css('height', window.innerHeight - 127);
   });
   $(window).resize(); // trigger resize event
 });
+
 Template.map.rendered = function() {
 	var mymap = L.map('map').setView([40.767520316999857, -73.904136377999933], 13);
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -14,7 +19,9 @@ Template.map.rendered = function() {
 			accessToken: 'pk.eyJ1IjoiZ2FobWVkODQwMyIsImEiOiJjamRqYTdrb3UwdnZrMnhzYWJ3MW54bzZoIn0._dnzXUrrS4XsO1LsEGPyFw'
 	}).addTo(mymap);
 	addLayers(allHoods, mymap);
+	console.log(Meteor.status());
 };
+
 function addLayers(allLayers, mymap){
   for (var i = 0, len = allLayers['features'].length; i < len; i++) {
     var layer = allLayers['features'][i];

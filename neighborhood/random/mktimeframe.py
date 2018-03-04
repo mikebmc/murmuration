@@ -9,7 +9,7 @@ from utils import natsorted
 from pymongo import MongoClient
 
 min_interval = 60
-prd = '2017-02'
+prd = '2017-03'
 
 # get the date from 1 year ago ignoring leap years
 dt = datetime.datetime.now() - datetime.timedelta(days=365)
@@ -50,7 +50,7 @@ for ii, color in enumerate(
     timeframe.loc[idx == ii, 'color'] = color
 
 # open a connection to mongodb
-client = MongoClient('mongodb://localhost:27017')
+client = MongoClient('mongodb://localhost:3001/meteor')
 db = client.layer_bank
 
 # and replace what's currently inside of the toplayer collection
