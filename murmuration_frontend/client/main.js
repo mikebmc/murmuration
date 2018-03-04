@@ -1,5 +1,4 @@
 import { allHoods } from './allHoods';
-import { Toplayer } from '../import/api/collections.js';
 
 //Meteor.subscribe('toplayer');
 
@@ -18,15 +17,35 @@ Template.map.rendered = function() {
 			id: 'mapbox.streets',
 			accessToken: 'pk.eyJ1IjoiZ2FobWVkODQwMyIsImEiOiJjamRqYTdrb3UwdnZrMnhzYWJ3MW54bzZoIn0._dnzXUrrS4XsO1LsEGPyFw'
 	}).addTo(mymap);
-	addLayers(allHoods, mymap);
-	console.log(Meteor.status());
+	Meteor.call("get.neighborhoodColors", function(err, rawTopLayer){
+		console.log("Getting Colors");
+		var hoodColors = setHoodMap(rawTopLayer);
+		addLayers(allHoods, mymap, hoodColors);
+	});
 };
-
-function addLayers(allLayers, mymap){
+function setHoodMap(rawTopLayer){
+    var hoodColors = new Map();
+    try{
+      var hoodIds = rawTopLayer[0]['n_id'];
+      var colors = rawTopLayer[0]['color'];
+      var i = 0;
+      for (i = 0; i < hoodIds.length; i++){
+        hoodColors.set(hoodIds[i], colors[i]);
+      }
+      return hoodColors;
+    }catch(e){
+      throw new Meteor.Error("Error getting neighborhood colors (wee woo wee woo): " + e);
+    }
+    return null;
+}
+function addLayers(allLayers, mymap, hoodColors){
   for (var i = 0, len = allLayers['features'].length; i < len; i++) {
     var layer = allLayers['features'][i];
-    var options = {
-      "color": getRandomColor(),
+		var n_id = layer['properties']['LocationID'];
+		var hoodColor = null;
+		if (hoodColors.has(n_id)) hoodColor = hoodColors.get(n_id);
+		var options = {
+      "color": hoodColor,
       "weight": 5,
       "opacity": 0.65
     };

@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 
-import '../import/api/collections.js';
 
 Meteor.startup(() => {
 	//process.env['MONGO_URL'] = "mongodb://localhost/meteor.layer_bank";
