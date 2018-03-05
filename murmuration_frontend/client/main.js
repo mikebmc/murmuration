@@ -4,7 +4,7 @@ import { allHoods } from './allHoods';
 
 Meteor.startup(function() {
   $(window).resize(function() {
-    $('#map').css('height', window.innerHeight - 127);
+    $('#map').css('height', window.innerHeight - 30);
   });
   $(window).resize(); // trigger resize event
 });
