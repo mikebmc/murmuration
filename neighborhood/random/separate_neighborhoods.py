@@ -4,7 +4,7 @@ from utils import cleanup
 
 neighborhood_dir = '../neighborhood'
 data_dir = '../../data/'
-prd = '2017-02'
+prd = '2017-03'
 read = os.path.join(data_dir, 'yellow_tripdata_{}.csv'.format(prd))
 
 # delete all matching files
