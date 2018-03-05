@@ -23,6 +23,7 @@ Template.map.rendered = function() {
 		addLayers(allHoods, mymap, hoodColors);
 	});
 };
+
 function setHoodMap(rawTopLayer){
     var hoodColors = new Map();
     try{
@@ -38,6 +39,7 @@ function setHoodMap(rawTopLayer){
     }
     return null;
 }
+
 function addLayers(allLayers, mymap, hoodColors){
   for (var i = 0, len = allLayers['features'].length; i < len; i++) {
     var layer = allLayers['features'][i];
@@ -47,13 +49,15 @@ function addLayers(allLayers, mymap, hoodColors){
 		var options = {
       "color": hoodColor,
       "weight": 5,
-      "opacity": 0.65
+      "opacity": 0.8,
+			"fillOpacity": 0.5
     };
     L.geoJSON(layer, {
         style: options
     }).addTo(mymap);
   }
 }
+
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
   var color = '#';
