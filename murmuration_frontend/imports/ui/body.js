@@ -25,7 +25,7 @@ Template.body.events({
     target.text.value = '';
 
     // This is to view what's in the collections.
-    // console.log(Emails.find().fetch());
+     console.log(Emails.find().fetch());
 
   },
 });
