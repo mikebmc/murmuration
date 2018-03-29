@@ -1,10 +1,16 @@
+<!-- NOTE: You MUST place all images in the public folder. Meteor looks there first.
+     ANOTHER NOTE: If Meteor still cannot find your image, move it to another
+     folder and then move it back. -->
+
 <head>
   <title>Fare Taxi Company</title>
+  <link rel = "shortcut icon" type = "image/x-icon" href = "fare_icon.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
+
 <body>
-  {{> map}}
 </body>
+
 <template name = "map">
   <div id = "map-container">
     <div id = "map" class = "map"></div>

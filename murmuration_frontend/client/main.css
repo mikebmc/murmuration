@@ -2,3 +2,26 @@
   width: 100%;
   margin: 15px auto 0 auto;
 }
+
+body {
+  background-image: url('backgroundImage.png');
+  background-attachment: fixed;
+  background-size: auto 100%;
+}
+
+.container {
+  padding-top: 200px;
+  padding-left: 200px;
+  text-align: center;
+}
+
+p.description {
+  text-align: right;
+  padding-top: 8px;
+  padding-right: 35px;
+  font-size: 150%;
+}
+
+h1.betaTester {
+  color: #2eb82e;
+}
