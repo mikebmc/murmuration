@@ -6,7 +6,7 @@
 body {
   background-image: url('backgroundImage.png');
   background-attachment: fixed;
-  background-size: auto 100%;
+  background-size: 100% 100%;
 }
 
 .container {
@@ -16,7 +16,7 @@ body {
 }
 
 p.description {
-  text-align: right;
+  text-align: center;
   padding-top: 8px;
   padding-right: 35px;
   font-size: 150%;
