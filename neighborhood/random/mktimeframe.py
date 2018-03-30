@@ -42,16 +42,19 @@ timeframe.index.name = 'n_id'
 timeframe.rename(columns={'PULocationID': 'count'}, inplace=True)
 timeframe['color'] = np.nan
 
-# use kmeans to calculate centroids for color assignments
-idx = KMeans(n_clusters=5).fit(
-    timeframe['count'].values.reshape(-1, 1)).labels_
-for ii, color in enumerate(
+# use kmeans to calculate centroids for color assignments and sort them
+kmeans = KMeans(n_clusters=5).fit(timeframe['count'].values.reshape(-1, 1))
+idx = kmeans.labels_
+sorted_idx = np.argsort(kmeans.cluster_centers_, axis=None)
+
+for ii, color in zip(
+        sorted_idx,
         ['#edf8fb', '#b2e2e2', '#66c2a4', '#2ca25f', '#006d2c']):
     timeframe.loc[idx == ii, 'color'] = color
 
 # open a connection to mongodb
-client = MongoClient('mongodb://localhost:3001/meteor')
-db = client.layer_bank
+client = MongoClient('mongodb://localhost:3001/')
+db = client.meteor
 
 # and replace what's currently inside of the toplayer collection
 post_id = db.toplayer.update(
