@@ -48,11 +48,20 @@ module.exports = {
     // You might need to disable it on CI servers
     enableUploadProgressBar: true
   },
-
+	
   mongo: {
     version: '3.6.2',
     servers: {
       one: {}
+    }
+  },
+
+  proxy: {
+    domains: 'www.fare-taxi.com',
+    ssl: {
+      // Enable let's encrypt to create free certificates
+      letsEncryptEmail: 'mike@fare-taxi.com',
+			forceSSL: true
     }
   }
 };
