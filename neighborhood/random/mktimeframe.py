@@ -53,8 +53,8 @@ for ii, color in zip(
     timeframe.loc[idx == ii, 'color'] = color
 
 # open a connection to mongodb
-client = MongoClient('mongodb://localhost:3001/meteor')
-db = client.layer_bank
+client = MongoClient('mongodb://localhost:3001/')
+db = client.meteor
 
 # and replace what's currently inside of the toplayer collection
 post_id = db.toplayer.update(

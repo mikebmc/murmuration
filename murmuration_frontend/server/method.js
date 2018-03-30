@@ -1,4 +1,4 @@
-import { topLayer } from './toplayer.js';
+import { topLayer } from '/imports/collections/toplayer.js';
 Meteor.methods({
   'get.neighborhoodColors': function(){
     try{
