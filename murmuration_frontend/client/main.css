@@ -35,16 +35,6 @@ h1.beta {
     background-size: cover;
   }
 
-  p.description {
-    font-weight: bold;
-    font-size: 100%;
-  }
-
-  h1.beta {
-    color: black;
-    font-size: 200%;
-  }
-
   .col-md-8 {
     background-image:
       /* Make background of content opaque. */
@@ -59,5 +49,22 @@ h1.beta {
 @media screen and (max-width: 600px) {
    body {
      background-image: url('smaller_backgroundImage.png');
+   }
+
+   .col-md-8 {
+     background-image:
+       /* Make background of content opaque. */
+       linear-gradient(
+         rgba(255, 255, 255, 0.75),
+         rgba(255, 255, 255, 0.75)
+       );
+   }
+
+   p.description {
+     font-size: 100%;
+   }
+
+   h1.beta {
+     font-size: 200%;
    }
 }
