@@ -6,22 +6,58 @@
 body {
   background-image: url('backgroundImage.png');
   background-attachment: fixed;
-  background-size: auto 100%;
+  background-size: cover;
+
+  /* This centers the content. */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .container {
-  padding-top: 200px;
-  padding-left: 200px;
   text-align: center;
 }
 
 p.description {
-  text-align: center;
-  padding-top: 8px;
-  padding-right: 35px;
   font-size: 150%;
 }
 
-h1.betaTester {
+h1.beta {
   color: #2eb82e;
+}
+
+/* CSS for displays of 1200px or less. */
+@media screen and (max-width: 1200px) {
+  body {
+    background-image: url('backgroundImage.png');
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  p.description {
+    font-weight: bold;
+    font-size: 100%;
+  }
+
+  h1.beta {
+    color: black;
+    font-size: 200%;
+  }
+
+  .col-md-8 {
+    background-image:
+      /* Make background of content opaque. */
+      linear-gradient(
+        rgba(255, 255, 255, 0.55),
+        rgba(255, 255, 255, 0.55)
+      );
+  }
+}
+
+/* CSS for displays of 600px or less. */
+@media screen and (max-width: 600px) {
+   body {
+     background-image: url('smaller_backgroundImage.png');
+   }
 }
