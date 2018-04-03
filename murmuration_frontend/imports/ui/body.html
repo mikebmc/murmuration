@@ -1,0 +1,43 @@
+<!-- NOTE: You MUST place all images in the public folder. Meteor looks there first.
+     ANOTHER NOTE: If Meteor still cannot find your image, move it to another
+     folder and then move it back. -->
+<head>
+  <link rel = "stylesheet" href = "main.css">
+</head>
+
+<body>
+<!-- W3Schools: This will set the viewport of your page, which will give the browser
+     instructions on how to control the page's dimentions and scaling. -->
+  <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+
+  <div class = "container">
+    <div class = "row">
+      <!-- Bootstrap splits browser into 12 columns. "col-md-x" sets how many columns
+           a column can span over, where x is the number of columns you want it to span over. -->
+      <div class = "col-md-2"></div>
+      <div class = "col-md-8">
+
+        <!-- <picture> hold one or more <source> tags and one <img> tag.
+             It allows the image to change based on media display size. The default,
+             however, is the <img> tag. -->
+        <picture>
+          <source media = "(max-width: 600px)" srcset = "smaller_fare_logo.png" style = "max-width: 100%">
+          <img src = "fare_logo.png" alt = "Could not display logo" style = "max-width: 100%">
+        </picture>
+
+        <p class = "description">The map that gets you so many fares it's almost unfair</p>
+
+        <!-- Submit email form (and submit button) -->
+        <form class = "submit-email">
+          <h1 class = "beta">Become a Beta Tester!</h1>
+          <input type = "text" name = "text" placeholder = " Enter your email"/>
+          <button class = "submit">Submit</button>
+        </form>
+
+      </div>
+      <div class = "col-md-2"></div>
+
+    </div>
+  </div>
+
+</body>

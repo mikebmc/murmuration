@@ -1,13 +1,14 @@
 import { allHoods } from './allHoods';
-
-//Meteor.subscribe('toplayer');
+import '../imports/ui/body.js';
 
 Meteor.startup(function() {
-  $(window).resize(function() {
-    $('#map').css('height', window.innerHeight - 30);
-  });
-  $(window).resize(); // trigger resize event
+  // $(window).resize(function() {
+  //   $('#map').css('height', window.innerHeight - 30);
+  // });
+  // $(window).resize(); // trigger resize event
 });
+
+//Meteor.subscribe('toplayer');
 
 Template.map.rendered = function() {
 	var mymap = L.map('map').setView([40.767520316999857, -73.904136377999933], 13);
