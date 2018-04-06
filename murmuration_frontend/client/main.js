@@ -1,7 +1,5 @@
 import { allHoods } from './allHoods';
 
-//Meteor.subscribe('toplayer');
-
 Meteor.startup(function() {
   $(window).resize(function() {
     $('#map').css('height', window.innerHeight - 30);
@@ -10,7 +8,7 @@ Meteor.startup(function() {
 });
 
 Template.map.rendered = function() {
-	var mymap = L.map('map').setView([40.767520316999857, -73.904136377999933], 13);
+	var mymap = L.map('map').locate({setView: true, maxZoom: 13});
 	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
 			maxZoom: 18,
