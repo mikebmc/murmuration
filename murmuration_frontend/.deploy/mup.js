@@ -26,7 +26,7 @@ module.exports = {
     env: {
       // TODO: Change to your app's url
       // If you are using ssl, it needs to start with https://
-      ROOT_URL: 'http://www.murmuration-taxi.com',
+      ROOT_URL: 'http://beta.fare-taxi.com',
       MONGO_URL: 'mongodb://meteor:lostStarling@ec2-34-227-52-163.compute-1.amazonaws.com:27017/meteor',
     },
 		deployCheckWaitTime: 40,
@@ -51,7 +51,7 @@ module.exports = {
   },
 
   proxy: {
-    domains: 'www.murmuration-taxi.com',
+    domains: 'beta.fare-taxi.com',
     ssl: {
       // Enable let's encrypt to create free certificates
       letsEncryptEmail: 'mike@fare-taxi.com',
