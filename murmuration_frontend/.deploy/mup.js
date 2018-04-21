@@ -2,7 +2,7 @@ module.exports = {
   servers: {
     one: {
       // TODO: set host address, username, and authentication method
-      host: '54.145.161.37',
+      host: '54.144.163.235',
       username: 'ubuntu',
       pem: '~/.ssh/murmurationZahn.pem',
       // password: 'server-password'
@@ -26,9 +26,10 @@ module.exports = {
     env: {
       // TODO: Change to your app's url
       // If you are using ssl, it needs to start with https://
-      ROOT_URL: 'http://www.fare-taxi.com',
-      MONGO_URL: 'mongodb://localhost/meteor',
+      ROOT_URL: 'http://beta.fare-taxi.com',
+      MONGO_URL: 'mongodb://meteor:lostStarling@ec2-34-227-52-163.compute-1.amazonaws.com:27017/meteor',
     },
+		deployCheckWaitTime: 40,
 
     // ssl: { // (optional)
     //   // Enables let's encrypt (optional)
@@ -48,16 +49,9 @@ module.exports = {
     // You might need to disable it on CI servers
     enableUploadProgressBar: true
   },
-	
-  mongo: {
-    version: '3.6.2',
-    servers: {
-      one: {}
-    }
-  },
 
   proxy: {
-    domains: 'www.fare-taxi.com',
+    domains: 'beta.fare-taxi.com',
     ssl: {
       // Enable let's encrypt to create free certificates
       letsEncryptEmail: 'mike@fare-taxi.com',
