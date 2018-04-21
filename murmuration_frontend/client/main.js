@@ -27,9 +27,10 @@ Template.map.rendered = function() {
 	}).addTo(mymap);
 
 //	intialize the map layers with current data in toplayer collection
+  var geoJsonLayer = null;
 	try{
     Meteor.call('get.neighborhoodColors', function(err,rawTopLayer){
-      var geoJsonLayer = L.geoJSON(allHoods).addTo(mymap);
+      geoJsonLayer = L.geoJSON(allHoods).addTo(mymap);
       if (err) alert("not able to fetch neigbhood colors");
       let hoodColors = setHoodMap(rawTopLayer);
       updateLayers(geoJsonLayer, mymap, hoodColors);
@@ -56,6 +57,7 @@ Template.map.rendered = function() {
 
 function refresh_layers(geoJsonLayer, mymap) {
   consolelog("refreshing layers");
+  cosnole.log(geoJsonLayer);
   try{
     Meteor.call('get.neighborhoodColors', function(err,rawTopLayer){
       let hoodColors = setHoodMap(rawTopLayer);
