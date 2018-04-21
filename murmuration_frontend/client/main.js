@@ -24,12 +24,48 @@ Template.map.rendered = function() {
 			id: 'mapbox.streets',
 			accessToken: 'pk.eyJ1IjoiZ2FobWVkODQwMyIsImEiOiJjamRqYTdrb3UwdnZrMnhzYWJ3MW54bzZoIn0._dnzXUrrS4XsO1LsEGPyFw'
 	}).addTo(mymap);
-	Meteor.call("get.neighborhoodColors", function(err, rawTopLayer){
+
+//	intialize the map layers with current data in toplayer collection
+	try{
+		var rawTopLayer = TopLayer.find({}).fetch();
 		var hoodColors = setHoodMap(rawTopLayer);
-		addLayers(allHoods, mymap, hoodColors);
+		var geoJsonLayer = L.geoJSON(allHoods).addTo(mymap);
+		updateLayers(geoJsonLayer, mymap, hoodColors);
+	}catch(e){
+      throw new Meteor.Error("Error initializing colors: " + e);
+	}
+
+	// set meteor to watch for changes in the toplayer collection
+	// redraw neighborhood layers when a change is found
+	TopLayer.find({}).observe({
+		added: function(newDoc, oldDoc) {
+			console.log('toplayer added!');
+		},
+		changed: function(newDoc, oldDoc) {
+			console.log('toplayer changed!');
+			refresh_layers(geoJsonLayer, mymap);
+		}
 	});
+
+	// geolocate user and initialize following parameters
 	locateOnMap(mymap);
 };
+
+function refresh_layers(geoJsonLayer, mymap) {
+	try{
+		try{
+			var rawTopLayer = TopLayer.find({}).fetch();
+		}catch(e){
+			throw new Meteor.Error("Error accessing toplayer" + e);
+		}
+		var hoodColors = setHoodMap(rawTopLayer);
+
+		updateLayers(geoJsonLayer, mymap, hoodColors, true);
+    }catch(e){
+      throw new Meteor.Error("Error getting neighborhood colors (wee woo wee woo 2): " + e);
+    }
+
+}
 
 function locateOnMap(mymap) {
 	mymap.locate({
@@ -62,36 +98,31 @@ function onLocationError(e) {
 }
 
 function setHoodMap(rawTopLayer){
-    var hoodColors = new Map();
-    try{
-      var hoodIds = rawTopLayer[0]['n_id'];
-      var colors = rawTopLayer[0]['color'];
-      var i = 0;
-      for (i = 0; i < hoodIds.length; i++){
-        hoodColors.set(hoodIds[i], colors[i]);
-      }
-      return hoodColors;
-    }catch(e){
-      throw new Meteor.Error("Error getting neighborhood colors (wee woo wee woo): " + e);
-    }
-    return null;
+	var hoodColors = new Map();
+	try{
+		var hoodIds = rawTopLayer[0]['n_id'];
+		var colors = rawTopLayer[0]['color'];
+		var i = 0;
+		for (i = 0; i < hoodIds.length; i++){
+			hoodColors.set(hoodIds[i], colors[i]);
+		}
+		return hoodColors;
+	}catch(e){
+		throw new Meteor.Error("Error getting neighborhood colors (wee woo wee woo): " + e);
+	}
+	return null;
 }
 
-function addLayers(allLayers, mymap, hoodColors){
-  for (var i = 0, len = allLayers['features'].length; i < len; i++) {
-    var layer = allLayers['features'][i];
-		var n_id = layer['properties']['LocationID'];
-		var hoodColor = null;
-		if (hoodColors.has(n_id)) hoodColor = hoodColors.get(n_id);
-		var options = {
-      "color": hoodColor,
-			"id": n_id,
-      "weight": 3,
-      "opacity": 0.5,
-			"fillOpacity": 0.6
-    };
-    L.geoJSON(layer, {
-        style: options
-    }).addTo(mymap);
-  }
+function updateLayers(geoJsonLayer, mymap, hoodColors, clear){
+	
+	geoJsonLayer.eachLayer(function (layer) {
+		var locationID = layer.feature.properties.LocationID;
+		layer._path.id = 'feature-' + locationID;
+		layer.setStyle({
+			color: hoodColors.get(locationID),
+			weight: 3,
+			opacity: 0.5,
+			fillOpacity: 0.5
+		});
+	});
 }
