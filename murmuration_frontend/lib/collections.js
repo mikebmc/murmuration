@@ -1,1 +1,1 @@
-TopLayer = new Mongo.Collection('toplayer');
+export const TopLayer = new Mongo.Collection('toplayer');

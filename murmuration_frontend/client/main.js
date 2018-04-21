@@ -1,4 +1,5 @@
 import { allHoods } from './allHoods';
+import { TopLayer } from '/lib/collections';
 
 Meteor.startup(function() {
   $(window).resize(function() {
@@ -27,10 +28,12 @@ Template.map.rendered = function() {
 
 //	intialize the map layers with current data in toplayer collection
 	try{
-		var rawTopLayer = TopLayer.find({}).fetch();
-		var hoodColors = setHoodMap(rawTopLayer);
-		var geoJsonLayer = L.geoJSON(allHoods).addTo(mymap);
-		updateLayers(geoJsonLayer, mymap, hoodColors);
+    Meteor.call('get.neighborhoodColors', function(err,rawTopLayer){
+      let geoJsonLayer = L.geoJSON(allHoods).addTo(mymap);
+      if (err) alert("not able to fetch neigbhood colors");
+      let hoodColors = setHoodMap(rawTopLayer);
+      updateLayers(geoJsonLayer, mymap, hoodColors);
+    });
 	}catch(e){
       throw new Meteor.Error("Error initializing colors: " + e);
 	}
@@ -52,18 +55,15 @@ Template.map.rendered = function() {
 };
 
 function refresh_layers(geoJsonLayer, mymap) {
-	try{
-		try{
-			var rawTopLayer = TopLayer.find({}).fetch();
-		}catch(e){
-			throw new Meteor.Error("Error accessing toplayer" + e);
-		}
-		var hoodColors = setHoodMap(rawTopLayer);
-
-		updateLayers(geoJsonLayer, mymap, hoodColors, true);
-    }catch(e){
-      throw new Meteor.Error("Error getting neighborhood colors (wee woo wee woo 2): " + e);
-    }
+  consolelog("refreshing layers");
+  try{
+    Meteor.call('get.neighborhoodColors', function(err,rawTopLayer){
+      let hoodColors = setHoodMap(rawTopLayer);
+      updateLayers(geoJsonLayer, mymap, hoodColors, true);
+    });
+  }catch(e){
+    throw new Meteor.Error("Error accessing toplayer" + e);
+  }
 
 }
 
@@ -73,7 +73,7 @@ function locateOnMap(mymap) {
 		watch: true,
 		maxZoom: 14
 	});
-	
+
 	//set some parameters for the location icon
 	var myIcon = L.icon({
 		iconUrl: '/images/map_icon.png',
@@ -108,13 +108,13 @@ function setHoodMap(rawTopLayer){
 		}
 		return hoodColors;
 	}catch(e){
-		throw new Meteor.Error("Error getting neighborhood colors (wee woo wee woo): " + e);
+		throw new Meteor.Error("Error getting neighborhood colors (wee woo wee woo original): " + e);
 	}
 	return null;
 }
 
 function updateLayers(geoJsonLayer, mymap, hoodColors, clear){
-	
+
 	geoJsonLayer.eachLayer(function (layer) {
 		var locationID = layer.feature.properties.LocationID;
 		layer._path.id = 'feature-' + locationID;
