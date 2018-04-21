@@ -56,10 +56,10 @@ Template.map.rendered = function() {
 };
 
 function refresh_layers(geoJsonLayer, mymap) {
-  consolelog("refreshing layers");
-  cosnole.log(geoJsonLayer);
+  console.log("refreshing layers");
   try{
     Meteor.call('get.neighborhoodColors', function(err,rawTopLayer){
+      if (err) alert("not able to fetch neigbhood colors on refresh");
       let hoodColors = setHoodMap(rawTopLayer);
       updateLayers(geoJsonLayer, mymap, hoodColors, true);
     });
